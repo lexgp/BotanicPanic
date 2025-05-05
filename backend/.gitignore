@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+.env
+/media/*
+!/media/.gitkeep
+/alembic/versions/*
+!/alembic/versions/.gitkeep
+
