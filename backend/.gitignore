@@ -5,4 +5,4 @@ __pycache__/
 !/media/.gitkeep
 /alembic/versions/*
 !/alembic/versions/.gitkeep
-
+*venv/*

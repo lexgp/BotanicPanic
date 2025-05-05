@@ -6,4 +6,4 @@ alembic
 pydantic
 python-multipart
 Pillow
-
+python-dotenv
