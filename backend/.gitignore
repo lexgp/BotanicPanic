@@ -3,6 +3,4 @@ __pycache__/
 .env
 /media/*
 !/media/.gitkeep
-/alembic/versions/*
-!/alembic/versions/.gitkeep
 *venv/*

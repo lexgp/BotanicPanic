@@ -1,6 +1,7 @@
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import ForeignKey, Enum
 from app.database import Base
+from app.enums.provider_type import ProviderType
 import enum
 
 class AlgorithmEnum(str, enum.Enum):
@@ -32,9 +33,12 @@ class Infection(Base):
 class MlModel(Base):
     __tablename__ = "ml_model"
     id: Mapped[int] = mapped_column(primary_key=True)
-    infection_id: Mapped[int] = mapped_column(ForeignKey("infection.id"))
-    infection: Mapped["Infection"] = relationship(backref="models")
-    algorithm: Mapped[AlgorithmEnum]
+    name: Mapped[str] = mapped_column(nullable=True, default='')
+    provider_type: Mapped[str] = mapped_column(nullable=True, default=ProviderType.LLM)
+    provider_url: Mapped[str] = mapped_column(nullable=True)
+    provider_secret_key: Mapped[str] = mapped_column(nullable=True)
+    provider_submodel: Mapped[str] = mapped_column(nullable=True)
+    map50: Mapped[float] = mapped_column(nullable=True)
     accuracy: Mapped[float]
     f1_score: Mapped[float]
     recall: Mapped[float]
@@ -43,10 +47,7 @@ class MlModel(Base):
 class Prediction(Base):
     __tablename__ = "prediction"
     id: Mapped[int] = mapped_column(primary_key=True)
-    ml_model_id: Mapped[int] = mapped_column(ForeignKey("ml_model.id"))
-    ml_model: Mapped["MlModel"] = relationship(backref="predictions")
     received_photo: Mapped[str]
     marked_photo: Mapped[str]
-    probability: Mapped[float]
-    coord: Mapped[str]
+    avg_confidence: Mapped[float] = mapped_column(nullable=True)
     sectors_count: Mapped[int]
