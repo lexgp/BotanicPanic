@@ -15,14 +15,11 @@ class LLMProvider(Provider):
     def __init__(self, model: MlModel):
         self.model = model
 
-    async def predict(self, image_path: str):
+    async def predict(self, image_url: str):
         client = OpenAI(
             api_key=self.model.provider_secret_key,
             base_url=self.model.provider_url,
         )
-        # TODO: заглушка, подсовывать свои фотки
-        image_url = "https://www.eurasiareview.com/wp-content/uploads/2021/08/d-21.jpg"
-        # image_url = "https://vrnikc.ru/wp-content/uploads/2021/08/pshenitsa-1-1024x576.jpg",
         
         photo_result = client.chat.completions.create(
             messages=[{
@@ -45,6 +42,7 @@ class LLMProvider(Provider):
 ]
 Если заболеваний не найдено, то массив будет пустым [].
 disease - название предполагаемой болезни на русском языке. confidence - уровень уверенности.
+rect_x1, rect_y1, rect_x2, rect_y2 - координаты диагонали прямоугольника, в которой ты видишь заражение, учитывай при расчёте размер предоставленного фото, и старайся чтобы в прямоугольник попадало всё заражение, но при этом его размер был минимально достаточным.
 Не надо давать больше никаких текстовых пояснений, только чистая json."""
                     },
                     {

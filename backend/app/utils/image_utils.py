@@ -7,6 +7,11 @@ from typing import Tuple
 
 TARGET_SIZE = (640, 640)
 
+def get_file_s3name(file: UploadFile) -> str:
+    ext = Path(file.filename).suffix or ".jpg"
+    filename = f"{uuid4().hex}{ext}"
+    return filename
+
 def save_to_media(file: UploadFile, subdirectory) -> Path:
     MEDIA_DIR = Path("media/" + subdirectory)
     MEDIA_DIR.mkdir(parents=True, exist_ok=True)
