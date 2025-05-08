@@ -4,7 +4,7 @@ from pathlib import Path
 from fastapi import APIRouter, UploadFile, File, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.database import get_async_session
-from app.models import Prediction
+from app.models import Prediction, ModelOpinion
 from app.schemas.prediction import PredictionOut
 from app.utils.image_utils import resize_image, save_to_media, get_file_s3name
 from app.services.prediction_service import create_prediction_from_opinions
@@ -51,6 +51,23 @@ async def predict(file: UploadFile = File(...), session: AsyncSession = Depends(
     opinions = await run_prediction(presigned_url, session)
     prediction = create_prediction_from_opinions(opinions, presigned_url)
     session.add(prediction)
+    await session.flush()
+
+    opinion_models = [
+        ModelOpinion(
+            prediction_id=prediction.id,
+            disease=op.disease,
+            confidence=op.confidence,
+            box_x1=op.box[0],
+            box_y1=op.box[1],
+            box_x2=op.box[2],
+            box_y2=op.box[3],
+            model_name=op.model_name,
+        )
+        for op in opinions
+    ]
+    session.add_all(opinion_models)
     await session.commit()
     await session.refresh(prediction)
+
     return prediction

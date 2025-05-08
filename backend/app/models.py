@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from sqlalchemy import ForeignKey, Enum
+from sqlalchemy import Float, ForeignKey, Enum, Integer, String
 from app.database import Base
 from app.enums.provider_type import ProviderType
 import enum
@@ -51,3 +51,28 @@ class Prediction(Base):
     marked_photo: Mapped[str]
     avg_confidence: Mapped[float] = mapped_column(nullable=True)
     sectors_count: Mapped[int]
+    opinions = relationship(
+        "ModelOpinion",
+        back_populates="prediction",
+        cascade="all, delete-orphan",
+        lazy="selectin",  # 👈 важно
+    )
+
+class ModelOpinion(Base):
+    __tablename__ = "model_opinions"
+
+    id = mapped_column(Integer, primary_key=True)
+    prediction_id = mapped_column(ForeignKey("prediction.id", ondelete="CASCADE"))
+    disease = mapped_column(String)
+    confidence = mapped_column(Float)
+    box_x1 = mapped_column(Integer)
+    box_y1 = mapped_column(Integer)
+    box_x2 = mapped_column(Integer)
+    box_y2 = mapped_column(Integer)
+    model_name = mapped_column(String)
+
+    prediction = relationship("Prediction", back_populates="opinions")
+
+    @property
+    def box(self):
+        return [self.box_x1, self.box_y1, self.box_x2, self.box_y2]
