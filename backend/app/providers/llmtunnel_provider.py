@@ -7,6 +7,7 @@ from app.models import MlModel
 from typing import Union
 from app.schemas.prediction import ModelOpinion
 from typing import List
+from typing import Tuple
 
 class LLMProvider(Provider):
 
@@ -15,7 +16,7 @@ class LLMProvider(Provider):
     def __init__(self, model: MlModel):
         self.model = model
 
-    async def predict(self, image_url: str):
+    async def predict(self, image_url: str, image_size: Tuple[int, int]):
         client = OpenAI(
             api_key=self.model.provider_secret_key,
             base_url=self.model.provider_url,
@@ -42,7 +43,8 @@ class LLMProvider(Provider):
 ]
 Если заболеваний не найдено, то массив будет пустым [].
 disease - название предполагаемой болезни на русском языке. confidence - уровень уверенности.
-rect_x1, rect_y1, rect_x2, rect_y2 - координаты диагонали прямоугольника, в которой ты видишь заражение, учитывай при расчёте размер предоставленного фото, и старайся чтобы в прямоугольник попадало всё заражение, но при этом его размер был минимально достаточным.
+rect_x1, rect_y1, rect_x2, rect_y2 - координаты диагонали прямоугольника в пикселях, целые числа. Это область в которой ты видишь заражение, учитывай при расчёте размер предоставленного фото, и старайся чтобы в прямоугольник попадало всё заражение, но при этом его размер был минимально достаточным.
+Размер изображения в пикселях: """ + f'ширина: {image_size[0]}, высота: {image_size[1]}' + """
 Не надо давать больше никаких текстовых пояснений, только чистая json."""
                     },
                     {

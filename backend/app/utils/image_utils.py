@@ -4,8 +4,15 @@ from pathlib import Path
 from PIL import Image
 from fastapi import UploadFile
 from typing import Tuple
+from io import BytesIO
 
 TARGET_SIZE = (640, 640)
+
+def get_image_size(file: BytesIO) -> Tuple[int, int]:
+    image = Image.open(file)
+    width, height = image.size
+    file.seek(0)
+    return width, height
 
 def get_file_s3name(file: UploadFile) -> str:
     ext = Path(file.filename).suffix or ".jpg"
