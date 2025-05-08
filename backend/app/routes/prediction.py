@@ -13,7 +13,7 @@ from app.services.s3_service import S3Service
 
 router = APIRouter()
 
-@router.post("/predict/", response_model=PredictionOut)
+@router.post("/api/predict/", response_model=PredictionOut)
 async def predict(file: UploadFile = File(...), session: AsyncSession = Depends(get_async_session)):
     if not file:
         raise HTTPException(status_code=400, detail="Файл не загружен")
