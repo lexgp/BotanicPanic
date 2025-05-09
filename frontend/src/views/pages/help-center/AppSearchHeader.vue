@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import SearchForm from '@/components/search/SearchForm.vue';
 import ShowResult from '@/components/search/ShowResult.vue';
-import AppSearchHeaderBg from '@images/pages/header-bg.png';
+import AppVideoHeaderBg from '@images/videos/top-background-c2.mp4';
 
 interface Props {
   title?: string
@@ -29,42 +29,52 @@ const finishSearch = (result: any) => {
 </script>
 
 <template>
-  <!-- 👉 Search Banner  -->
-  <VCard
-    flat
-    class="text-center search-header"
-    :class="props.customClass"
-    :style="`background: url(${AppSearchHeaderBg});`"
-  >
-    <VCardText>
-      <slot name="title">
-        <h4 class="text-h4 mb-2 font-weight-medium" style="color: #5229aa;">
-          {{ props.title }}
-        </h4>
-      </slot>
-      <div v-if="!predictionResult"
-        class="d-flex"
-        :class="isReverse ? 'flex-column' : 'flex-column-reverse' "
-      >
-        <p class="mb-0">
-          {{ props.subtitle }}
-        </p>
+  <div class="search-header">
+    <!-- Видеофон -->
+    <video
+      autoplay
+      loop
+      muted
+      playsinline
+      class="video-background"
+    >
+      <source :src="AppVideoHeaderBg" type="video/mp4" />
+    </video>
 
-        <div class="my-4">
-          <SearchForm
-            :is-show-button="true"
-            :is-only-main-search="true"
-            @finish="finishSearch"
-          />
+    <VCard
+      flat
+      class="text-center overlay-card"
+      :class="props.customClass"
+      style="z-index: 2;"
+    >
+      <VCardText>
+        <slot name="title">
+          <h4 class="text-h4 mb-2 font-weight-medium" style="color: #5229aa;">
+            {{ props.title }}
+          </h4>
+        </slot>
+        <div v-if="!predictionResult" class="d-flex flex-column">
+          <div class="my-4">
+            <SearchForm
+              :is-show-button="true"
+              :is-only-main-search="true"
+              @finish="finishSearch"
+            />
+          </div>
+
+          <p class="mt-4 mb-0">
+            {{ props.subtitle }}
+          </p>
+
         </div>
-      </div>
-      <ShowResult v-else
-        :prediction-result="predictionResult"
-        @retry-again="predictionResult=null"
-      />
+        <ShowResult v-else
+          :prediction-result="predictionResult"
+          @retry-again="predictionResult=null"
+        />
 
-    </VCardText>
-  </VCard>
+      </VCardText>
+    </VCard>
+  </div>
 </template>
 
 <style lang="scss">
@@ -84,5 +94,28 @@ const finishSearch = (result: any) => {
   .search-header {
     padding: 1.5rem !important;
   }
+}
+
+.video-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.4) blur(4px);
+  z-index: 1;
+  opacity: 0.4;
+}
+
+.search-header {
+  position: relative;
+  overflow: hidden;
+}
+.overlay-card {
+  position: relative;
+  z-index: 2;
+  background-color: transparent !important;
+  backdrop-filter: blur(4px);
 }
 </style>

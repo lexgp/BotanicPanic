@@ -28,7 +28,7 @@ const pagesPragments = ref<any>({
 <template>
   <div>
     <AppSearchHeader
-      subtitle="Протестировать выявление заражений можно прямо на сайте."
+      subtitle="Анализ заражения растения по фото прямо на сайте."
       custom-class="rounded-0"
       placeholder="Search"
     >

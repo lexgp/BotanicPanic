@@ -10,14 +10,12 @@ declare module 'vue' {
     ErrorHeader: typeof import('./src/components/ErrorHeader.vue')['default']
     MoreBtn: typeof import('./src/@core/components/MoreBtn.vue')['default']
     NotificationBox: typeof import('./src/components/header/NotificationBox.vue')['default']
-    PredictionCard: typeof import('./src/components/customers/PredictionCard.vue')['default']
-    ReviewItem: typeof import('./src/components/reviews/ReviewItem.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SearchForm: typeof import('./src/components/search/SearchForm.vue')['default']
     ShowResult: typeof import('./src/components/search/ShowResult.vue')['default']
     ThemeSwitcher: typeof import('./src/@core/components/ThemeSwitcher.vue')['default']
+    UploadPhotoArea: typeof import('./src/components/common/UploadPhotoArea.vue')['default']
     UploadPhotoAWS: typeof import('./src/components/common/UploadPhotoAWS.vue')['default']
-    VueApexCharts: typeof import('vue3-apexcharts')['default']
   }
 }

@@ -28,7 +28,7 @@ import Navbar from '@/views/front-pages/front-page-navbar.vue';
 .help-center-page {
   .search-header {
     background-size: cover !important;
-    padding-block: 9.25rem 4.75rem !important;
+    padding-block: 7.25rem 4.75rem !important;
   }
 
   .help-center-section {
