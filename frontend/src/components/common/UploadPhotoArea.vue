@@ -121,7 +121,7 @@ export default defineComponent({
       :disabled="disabled"
       @click="clickOnFile"
     >
-      Загрузить фотографию
+      Загрузить фотографию...
     </VBtn>
 
     <VProgressCircular

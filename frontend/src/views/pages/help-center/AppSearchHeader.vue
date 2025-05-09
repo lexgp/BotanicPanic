@@ -49,7 +49,7 @@ const finishSearch = (result: any) => {
     >
       <VCardText>
         <slot name="title">
-          <h4 class="text-h4 mb-2 font-weight-medium" style="color: #5229aa;">
+          <h4 class="text-h4 mb-2 font-weight-medium">
             {{ props.title }}
           </h4>
         </slot>
