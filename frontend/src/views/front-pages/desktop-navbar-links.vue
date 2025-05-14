@@ -17,28 +17,9 @@
       listTitle: 'Возможности',
       path: '/'
     },
-    // {
-    //   listTitle: 'Информация',
-    //   children: [
-    //     {
-    //       listTitle: 'О компании',
-    //       listIcon: 'ri-circle-line',
-    //       path: '/about/company',
-    //     },
-    //     {
-    //       listTitle: 'Правила сайта',
-    //       listIcon: 'ri-circle-line',
-    //       path: '/about/rules',
-    //     },
-    //   ]
-    // },
   ]
 
   const $props = defineProps({
-    // menuItems: {
-    //   type: Array as () => Array<any>,
-    //   required: true
-    // },
     isMegaMenuOpen: {
       type: Boolean,
       required: true
@@ -88,7 +69,6 @@
                         class="mega-menu-item nav-link"
                         :to="subMenuItem.path"
                       >
-                      <!-- :class="isCurrentRoute(listItem.to) ? 'active-link' : 'text-high-emphasis'" -->
                         <div class="d-flex align-center">
                           <VIcon
                             :icon="subMenuItem.listIcon"

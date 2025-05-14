@@ -125,12 +125,5 @@ import messageAudio from '@images/audio/message.mp3';
 .v-leave-to {
   opacity: 0;
 }
-/* @media (max-width: 600px) {
-  .notification-in-header {
-    position: fixed;
-    bottom: 0;
-    right: 0;
-  }
-} */
 
 </style>

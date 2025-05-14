@@ -9,7 +9,6 @@ import { VForm } from 'vuetify/components/VForm';
   const $store = useUserStore()
   const $api = useApi()
   const $route = useRoute()
-  // const isOpen = ref(false)
   const isProcessing = ref(false)
   const form = ref({
     email: '',
@@ -17,7 +16,6 @@ import { VForm } from 'vuetify/components/VForm';
   })
 
   const refLoginForm = ref<VForm>()
-  const currentRouteName = computed(() => $route.name)
 
   const tryLogin = async () => {
     refLoginForm.value?.validate()
@@ -45,19 +43,6 @@ import { VForm } from 'vuetify/components/VForm';
         }
       })
   }
-  
-  // watch(() => currentRouteName.value, () => {
-  //   isOpen.value = false
-  // })
-
-  onMounted(async () => {
-    // document.addEventListener('click', (e: any) => {
-    //   const target = e.target as HTMLElement
-    //   if (!target.closest('#header-mini-login')) {
-    //     isOpen.value = false
-    //   }
-    // })
-  })
 
 const isPasswordVisible = ref(false)
 </script>
@@ -71,7 +56,6 @@ const isPasswordVisible = ref(false)
     :close-on-content-click="false"
   >
     <template v-slot:activator="{ props }">
-      <!-- v-if="$vuetify.display.lgAndUp" -->
       <VBtn
         :variant="$vuetify.display.xs ? 'tonal' : 'elevated'"
         v-bind="props"
@@ -80,44 +64,15 @@ const isPasswordVisible = ref(false)
         :class="$vuetify.display.xs ? 'pl-3 pr-4 py-2' : ''"
         :size="$vuetify.display.xs ? 'sm' : 'default'"
       >
-      <!-- color="white" -->
         Личный кабинет
       </VBtn>
 
-      <!-- <VBtn
-        v-else
-        rounded
-        icon
-        variant="elevated"
-        color="primary"
-        v-bind="props"
-      >
-        <VIcon icon="ri-user-fill" />
-      </VBtn> -->
-
-      <!-- <VBtn
-        v-if="$vuetify.display.lgAndUp"
-        variant="elevated"
-        color="success"
-        prepend-icon="ri-account-box-fill"
-        to="/register"
-      >
-        Регистрация
-      </VBtn> -->
-
     </template>
     <VList>
-      <!-- 👉 User Avatar & Name -->
       <VListItem>
-        
-
-        <!-- <h5 class="text-h5 mb-2 text-center">
-          Войти в личный кабинет
-        </h5> -->
 
         <VForm class="mt-4" ref="refLoginForm" @submit.prevent="() => tryLogin()">
           <VRow>
-            <!-- email -->
             <VCol cols="12">
               <VTextField
                 v-model="form.email"
@@ -154,26 +109,6 @@ const isPasswordVisible = ref(false)
               </VBtn>
             </VCol>
 
-            <!-- <VCol
-              cols="12"
-              class="d-flex align-center"
-            >
-              <VDivider />
-              <span class="mx-2">или</span>
-              <VDivider />
-            </VCol>
-
-            <VCol
-              cols="12"
-              class="text-center text-base"
-            >
-              <RouterLink
-                class="text-primary ms-2"
-                to="/register"
-              >
-                Создать новый аккаунт
-              </RouterLink>
-            </VCol> -->
           </VRow>
         </VForm>
       </VListItem>

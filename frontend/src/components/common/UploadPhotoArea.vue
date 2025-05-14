@@ -135,45 +135,6 @@ export default defineComponent({
       {{ Math.round(progress) }}%
     </VProgressCircular>
 
-    <!-- <VAvatar
-      rounded="lg"
-      size="100"
-      class="me-6 my-4"
-      :image="displayPhotoUrl"
-    />
-    <div class="d-flex flex-column justify-center gap-5">
-      <div class="d-flex flex-wrap gap-2 justify-center">
-        <label>
-          <input
-            ref="file"
-            type="file"
-            name="photo"
-            class="form-control"
-            hidden
-            :accept="acceptMediaTypes"
-            @change="handleUpload"
-          >
-          <VBtn color="primary" @click="clickOnFile"
-            :disabled="is_processing || disabled"
-            :loading="is_processing"
-          >
-            <VIcon
-              icon="ri-upload-cloud-line"
-              class="d-sm-none"
-            />
-              <span>
-                Загрузить фотографию
-              </span>
-
-          </VBtn>
-        </label>
-      </div>
-
-      <p class="text-body-1 mb-0">
-        JPG, GIF or PNG (Максимум 10мб)
-      </p>
-    </div> -->
-
   </div>
 </template>
 
