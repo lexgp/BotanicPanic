@@ -16,6 +16,5 @@ declare module 'vue' {
     ShowResult: typeof import('./src/components/search/ShowResult.vue')['default']
     ThemeSwitcher: typeof import('./src/@core/components/ThemeSwitcher.vue')['default']
     UploadPhotoArea: typeof import('./src/components/common/UploadPhotoArea.vue')['default']
-    UploadPhotoAWS: typeof import('./src/components/common/UploadPhotoAWS.vue')['default']
   }
 }

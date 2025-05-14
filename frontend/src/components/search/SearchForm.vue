@@ -13,7 +13,7 @@ import emptyProfilePhoto from '@images/pages/microscope.png';
           :api="'/api/predict/'"
           :api-props="{}"
           :default-url="emptyProfilePhoto"
-          label="Загрузить фото для тестирования:"
+          label="Загрузить фото для исследования:"
           class="mx-auto"
           @finish="$emit('finish', $event)"
         />

@@ -180,7 +180,7 @@ export default defineComponent({
 <style scoped>
 .upload-area {
   border: 2px dashed #888;
-  background-color: rgba(255, 255, 255, 0.02);
+  background-color: rgba(124, 124, 124, 0.3);
   transition: background-color 0.2s;
   min-height: 240px;
   cursor: pointer;

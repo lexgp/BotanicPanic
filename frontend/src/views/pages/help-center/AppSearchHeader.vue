@@ -23,15 +23,45 @@ const props = withDefaults(defineProps<Props>(), {
   isReverse: false,
 })
 
+const backgroundVideoElement = computed(() => {
+  return document.querySelector('video#main-video-background') as HTMLVideoElement | null
+})
+
+const dashboardHeaderElement = computed(() => {
+  return document.querySelector('#dashboard-header') as HTMLHeadingElement | null
+})
+
+const uploadAreaElement = computed(() => {
+  return document.querySelector('.upload-area') as HTMLDivElement | null
+})
+
+
+
 const finishSearch = (result: any) => {
   predictionResult.value = result
+  backgroundVideoElement.value?.pause()
+  dashboardHeaderElement.value?.scrollIntoView({
+    behavior: 'smooth',
+    block: 'start'
+  })
+}
+
+const retryAgain = () => {
+  predictionResult.value = null
+  backgroundVideoElement.value?.play()
+  nextTick(() => {
+    uploadAreaElement.value?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'center'
+    })
+  })
 }
 </script>
 
 <template>
   <div class="search-header">
     <!-- Видеофон -->
-    <video
+    <video id="main-video-background"
       autoplay
       loop
       muted
@@ -69,7 +99,7 @@ const finishSearch = (result: any) => {
         </div>
         <ShowResult v-else
           :prediction-result="predictionResult"
-          @retry-again="predictionResult=null"
+          @retry-again="retryAgain"
         />
 
       </VCardText>
@@ -105,7 +135,6 @@ const finishSearch = (result: any) => {
   object-fit: cover;
   filter: brightness(0.4) blur(4px);
   z-index: 1;
-  opacity: 0.4;
 }
 
 .search-header {

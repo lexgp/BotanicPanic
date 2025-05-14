@@ -28,18 +28,17 @@ const pagesPragments = ref<any>({
 <template>
   <div>
     <AppSearchHeader
-      subtitle="Анализ заражения растения по фото прямо на сайте."
+      subtitle="Онлайн-анализ изображений растений на наличие заболеваний."
       custom-class="rounded-0"
       placeholder="Search"
     >
       <template #title>
-        <h4
+        <h4 id="dashboard-header"
           class="text-h4 text-dark-primary mb-4"
           style="color: var(--v-theme-on-surface); z-index: 1; position: relative; font-weight: 700;"
         >
         Система мониторинга болезней растений
         </h4>
-        <!-- {{ pagesPragments }} -->
       </template>
     </AppSearchHeader>
 
