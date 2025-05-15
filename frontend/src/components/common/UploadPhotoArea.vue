@@ -105,7 +105,7 @@ export default defineComponent({
     />
     <VIcon v-else size="48" color="primary" icon="ri-upload-cloud-2-line" />
 
-    <p class="text-body-2 mb-4">Перетащите фото сюда или нажмите кнопку ниже</p>
+    <p v-if="!is_processing" class="text-body-2 mb-4">Перетащите фото сюда или нажмите кнопку ниже</p>
 
     <input
       ref="file"
@@ -141,13 +141,13 @@ export default defineComponent({
 <style scoped>
 .upload-area {
   border: 2px dashed #888;
-  background-color: rgba(124, 124, 124, 0.3);
+  background-color: rgba(124, 124, 124, 0.15);
   transition: background-color 0.2s;
   min-height: 240px;
   cursor: pointer;
 }
 .drag-over {
-  background-color: rgba(255, 255, 255, 0.05);
+  background-color: rgba(255, 255, 255, 0.3);
   border-color: #5e9bff;
 }
 </style>

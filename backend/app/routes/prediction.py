@@ -1,7 +1,3 @@
-import uuid
-from pathlib import Path
-from fastapi import APIRouter, UploadFile, File, Depends, HTTPException
-from sqlalchemy.ext.asyncio import AsyncSession
 from app.database import get_async_session
 from app.models import Prediction, ModelOpinion
 from app.schemas.prediction import PredictionOut
@@ -10,10 +6,19 @@ from app.services.prediction_service import create_prediction_from_opinions
 from app.services.prediction_service import run_prediction
 from app.services.prediction_service import prediction_preview
 from app.services.s3_service import S3Service
+from fastapi import APIRouter
+from fastapi import UploadFile
+from fastapi import File
+from fastapi import Depends
+from fastapi import HTTPException
+from fastapi import Query
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy import select
+from typing import List
 
 router = APIRouter()
 
-@router.post("/api/predict/", response_model=PredictionOut)
+@router.post("/predict/", response_model=PredictionOut)
 async def predict(file: UploadFile = File(...), session: AsyncSession = Depends(get_async_session)):
     if not file:
         raise HTTPException(status_code=400, detail="Файл не загружен")
@@ -25,8 +30,8 @@ async def predict(file: UploadFile = File(...), session: AsyncSession = Depends(
     opinions = await run_prediction(prediction_in_url, image_size, session)
     prediction_out_file = await prediction_preview(prediction_in_url, opinions)
     prediction_out_name = prediction_in_name.replace(".", "_predicted.")
-    prediction_out_url = await s3_service.upload_file(prediction_out_file, prediction_out_name)
-    prediction = create_prediction_from_opinions(opinions, prediction_in_url, prediction_out_url)
+    await s3_service.upload_file(prediction_out_file, prediction_out_name)
+    prediction = create_prediction_from_opinions(opinions, prediction_in_name, prediction_out_name)
     session.add(prediction)
     await session.flush()
 
@@ -47,4 +52,17 @@ async def predict(file: UploadFile = File(...), session: AsyncSession = Depends(
     await session.commit()
     await session.refresh(prediction)
 
-    return prediction
+    return PredictionOut.from_orm_with_signed_urls(prediction)
+
+
+@router.get("/predictions/", response_model=List[PredictionOut])
+async def get_predictions(
+    limit: int = Query(12, le=100),
+    offset: int = Query(0),
+    session: AsyncSession = Depends(get_async_session),
+):
+    result = await session.execute(
+        select(Prediction).order_by(Prediction.id.desc()).limit(limit).offset(offset)
+    )
+    predictions = result.scalars().all()
+    return [PredictionOut.from_orm_with_signed_urls(p) for p in predictions]

@@ -46,29 +46,14 @@ const menuMobileItems = computed(() => {
   const items = [
     {
       listTitle: 'Распознать заболевание',
-      path: '/search'
+      path: '#dashboard-header'
     },
   ] as MenuItem[]
-  if (currentAccount.value) {
-    items.push(...[
-      { listTitle: '', isDivider: true },
-      { listTitle: 'Мой аккаунт', path: '/account' },
-      { listTitle: 'Мои услуги', path: '/account/services' },
-      { listTitle: 'Мои сделки', path: '/account/my-offers' },
-      { listTitle: '', isDivider: true },
-      { listTitle: 'Реферальная программа', path: '/account/referrals' },
-    ])
-    if (currentAccount.value.profile.is_partner && currentAccount.value.profile.partner_type) {
-      items.push(
-        { listTitle: 'Партнёрская программа', path: '/account/partner' },
-      )
-    }
-  }
+
   items.push(...[
     { listTitle: '', isDivider: true },
-    { listTitle: 'Возможности', path: '/' },
-    { listTitle: 'О компании', path: '/' },
-    { listTitle: 'Правила сайта', path: '/' },
+    { listTitle: 'Этапы проекта', path: '#project-stages' },
+    { listTitle: 'О команбе', path: '#about-company' },
   ])
 
   return items
@@ -77,17 +62,17 @@ const menuMobileItems = computed(() => {
 const menuItems: MenuItem[] = [
   {
     listTitle: 'Распознать заболевание',
-    path: '/'
+    path: '#dashboard-header'
   },
   {
-    listTitle: 'Возможности',
+    listTitle: 'Этапы проекта',
     path: '/'
   },
   {
     listTitle: 'Информация',
     children: [
       {
-        listTitle: 'О компании',
+        listTitle: 'О команде',
         listIcon: 'ri-circle-line',
         path: '/about/company',
       },
@@ -133,80 +118,13 @@ const isCurrentRoute = (to: any) => {
 
           <template v-for="menuItem in menuMobileItems">
             <VDivider v-if="menuItem.isDivider" />
-            <RouterLink v-if="menuItem.path"
-              :to="menuItem.path"
+            <a v-if="menuItem.path"
+              :href="menuItem.path"
               class="nav-link font-weight-medium"
             >
               {{ menuItem.listTitle }}
-            </RouterLink>
+            </a>
           </template>
-            <!-- <template v-else>
-              <template v-for="subMenuItem in menuItem.children">
-                <RouterLink v-if="subMenuItem.path"
-                  :to="subMenuItem.path"
-                  class="nav-link font-weight-medium"
-                >
-                  {{ subMenuItem.listTitle }}
-                </RouterLink>
-              </template>
-            </template> -->
-            <!-- :class="[props.activeId?.toLocaleLowerCase().replace('-', ' ') === item.toLocaleLowerCase() ? 'active-link' : '']" -->
-
-            <!-- <div v-if="menuItem.children" class="font-weight-medium cursor-pointer">
-              <div
-                :class="[isMenuOpen ? 'mb-6 active-link' : '', isPageActive ? 'active-link' : '']"
-                style="color: rgba(var(--v-theme-on-surface));"
-                class="page-link"
-                @click="isMenuOpen = !isMenuOpen"
-              >
-                {{ menuItem.listTitle }} <VIcon :icon="isMenuOpen ? 'tabler-chevron-up' : 'tabler-chevron-down'" />
-              </div>
-
-              <div
-                class="px-4"
-                :class="isMenuOpen ? 'd-block' : 'd-none'"
-              >
-                <div
-                  v-for="(item, index) in menuItems"
-                  :key="index"
-                >
-                  <div class="d-flex align-center gap-x-3 mb-4">
-                    <VAvatar
-                      variant="tonal"
-                      color="primary"
-                      rounded
-                      :icon="item.listIcon"
-                    />
-                    <div class="text-body-1 text-high-emphasis font-weight-medium">
-                      {{ item.listTitle }}
-                    </div>
-                  </div>
-                  <ul class="mb-6">
-                    <li
-                      v-for="listItem in item.navItems"
-                      :key="listItem.name"
-                      style="list-style: none;"
-                      class="text-body-1 mb-4 text-no-wrap"
-                    >
-                      <RouterLink
-                        :to="listItem.to"
-                        :target="item.listTitle === 'Page' ? '_self' : '_blank'"
-                        class="mega-menu-item"
-                        :class="isCurrentRoute(listItem.to) ? 'active-link' : 'text-high-emphasis'"
-                      >
-                        <VIcon
-                          icon="ri-circle-line"
-                          :size="10"
-                          class="me-2"
-                        />
-                        <span>  {{ listItem.name }}</span>
-                      </RouterLink>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div> -->
-          <!-- </template> -->
         </div>
       </div>
 
@@ -254,91 +172,14 @@ const isCurrentRoute = (to: any) => {
               :class="$vuetify.display.mdAndUp ? 'd-none' : 'd-block'"
             >
               <div class="app-logo">
-                <!-- <VIcon class="logo-desktop"
-                  :icon="logolight"
-                  size="210"
-                  style="height: auto !important;"
-                /> -->
                 <VIcon class="logo-mobile mx-auto"
                   :icon="logolightMobile"
                   :size="240"
                   style="height: auto !important;"
                 />
-                
-                <!-- <img src="/images/svg/logo.svg"> -->
-                <!-- ЛОГО
-                <h1 class="app-logo-title">
-                  Заголовок
-                </h1> -->
               </div>
             </RouterLink>
           </VAppBarTitle>
-
-          <!-- landing page sections -->
-          <!-- :class="isCurrentRoute(listItem.to) ? 'active-link' : 'text-high-emphasis'" -->
-          <!-- active-link -->
-          <!-- <div class="text-base align-center d-none d-md-flex">
-
-            <template v-for="menuItem in menuItems">
-              <RouterLink v-if="menuItem.path"
-                :to="menuItem.path"
-                class="nav-link font-weight-medium py-2 px-2 px-lg-4"
-              >
-                {{ menuItem.listTitle }}
-              </RouterLink>
-
-              <span v-if="menuItem.children"
-                class="font-weight-medium cursor-pointer px-2 px-lg-4 py-2"
-                :class="isMegaMenuOpen ? 'active-link' : ''"
-                style="color: rgba(var(--v-theme-on-surface));"
-              >
-                {{ menuItem.listTitle }}
-                <VIcon
-                  icon="ri-arrow-down-s-line"
-                  size="16"
-                  class="ms-2"
-                />
-                <VMenu
-                  v-model="isMegaMenuOpen"
-                  open-on-hover
-                  activator="parent"
-                  transition="slide-y-transition"
-                  location="bottom center"
-                  offset="16"
-                  content-class="mega-menu"
-                  location-strategy="static"
-                  close-on-content-click
-                >
-                  <VCard max-width="1000">
-                    <VCardText class="px-8 pb-2 pt-4">
-                      <div class="nav-menu">
-                        <div>
-                          <ul>
-                            <li v-for="subMenuItem in menuItem.children" style="list-style: none;" class="text-body-1 mb-4 text-no-wrap">
-                              <RouterLink v-if="subMenuItem.path"
-                                class="mega-menu-item"
-                                :to="subMenuItem.path"
-                              >
-                                <div class="d-flex align-center">
-                                  <VIcon
-                                    :icon="subMenuItem.listIcon"
-                                    color="primary"
-                                    :size="10"
-                                    class="me-2"
-                                  />
-                                  <span>{{ subMenuItem.listTitle }}</span>
-                                </div>
-                              </RouterLink>
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
-                    </VCardText>
-                  </VCard>
-                </VMenu>
-              </span>
-            </template>
-          </div> -->
           <DesktopNavbarLinks 
             :menu-items="menuItems"
             v-model:isMegaMenuOpen="isMegaMenuOpen"

@@ -70,7 +70,9 @@ const retryAgain = () => {
     >
       <source :src="AppVideoHeaderBg" type="video/mp4" />
     </video>
-
+    
+    <div class="overlay-background"></div>
+    
     <VCard
       flat
       class="text-center overlay-card"
@@ -146,5 +148,14 @@ const retryAgain = () => {
   z-index: 2;
   background-color: transparent !important;
   backdrop-filter: blur(4px);
+}
+.overlay-background {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #28243d99;
+  z-index: 1;
 }
 </style>

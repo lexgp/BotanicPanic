@@ -83,7 +83,7 @@ async def prediction_preview(prediction_in_url: str, opinions: list) -> tuple[st
     draw = ImageDraw.Draw(overlay)
 
     try:
-        font = ImageFont.truetype("fonts/DejaVuSans.ttf", size=14)
+        font = ImageFont.truetype("fonts/DejaVuSans.ttf", size=32)
     except:
         font = ImageFont.load_default()
 
@@ -103,7 +103,7 @@ async def prediction_preview(prediction_in_url: str, opinions: list) -> tuple[st
         y1, y2 = sorted([y1, y2])
 
         color = COLORS[i % len(COLORS)]
-        draw.rectangle([x1, y1, x2, y2], outline=color, width=2)
+        draw.rectangle([x1, y1, x2, y2], outline=color, width=4)
         draw.text((x1 + 3, y1 + 3), op.disease, fill=color, font=font)
 
     # Объединяем с оригинальным изображением

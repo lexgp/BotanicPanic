@@ -3,13 +3,13 @@
     <v-row>
       <v-col cols="12" md="6">
         <v-img :src="predictionResult.received_photo" aspect-ratio="1" contains class="rounded-lg mb-2"
-          height="50vh"
+          style="max-height: 50vh;"
         />
         <div class="text-caption text-center">Загруженное фото</div>
       </v-col>
       <v-col cols="12" md="6">
         <v-img :src="predictionResult.marked_photo" aspect-ratio="1" contains class="rounded-lg mb-2"
-        height="50vh"
+          style="max-height: 50vh;"
         />
         <div class="text-caption text-center">Результат с разметкой</div>
       </v-col>

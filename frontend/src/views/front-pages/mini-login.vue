@@ -23,7 +23,7 @@ import { VForm } from 'vuetify/components/VForm';
         if (isValid) {
           isProcessing.value = true
           localStorage.setItem('token', '');
-          await $api.post('/auth/login/', form.value )
+          await $api.post('/api/auth/login/', form.value )
             .then((response: any) => {
               localStorage.setItem('token', response.data.token)
             })
@@ -33,12 +33,12 @@ import { VForm } from 'vuetify/components/VForm';
                 autoClose: 8000,
               })
             })
-            await $store.loginByToken()
-            if ($store.$state.account) {
-              toast.success("Добро пожаловать.", {
-                autoClose: 8000,
-              })
-            }
+            // await $store.loginByToken()
+            // if ($store.$state.account) {
+            //   toast.success("Добро пожаловать.", {
+            //     autoClose: 8000,
+            //   })
+            // }
             isProcessing.value = false
         }
       })

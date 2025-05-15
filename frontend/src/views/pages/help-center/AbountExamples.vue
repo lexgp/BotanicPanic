@@ -1,39 +1,49 @@
 <script setup lang="ts">
+import { useApi } from '@/composables/useApi';
 
-import examplePhoto2 from '@images/examples/047c4fba0f7b4123965e52de5fdd4997_predicted.jpg';
-import examplePhoto1 from '@images/examples/3bf990c21f9e48bbad61a56fbaac869a_predicted.jpg';
-import examplePhoto3 from '@images/examples/a6d4523b99ba4945aa6c7a8cbe5ac753_predicted.jpg';
-import examplePhoto4 from '@images/examples/c6f7633fc44d45fcaac25adaf5d9c545_predicted.jpg';
-import examplePhoto5 from '@images/examples/cdc8ba1dc4d745bab29bd9299ee4c303_predicted.jpg';
+const $api = useApi()
 
-  const exampleImages = ref([
-    examplePhoto1,
-    examplePhoto2,
-    examplePhoto3,
-    examplePhoto4,
-    examplePhoto5
-  ])
+  const predictsList = ref<Array<any>|null>(null)
+
+  const loadPredicts = () => {
+    $api.get('/api/predictions/')
+      .then(response => {
+        predictsList.value = response.data
+      })
+  }
+
+  onMounted(() => loadPredicts())
 
 </script>
 
 <template>
   <v-container class="py-6">
     <h2 class="text-h5 mb-4">📸 Примеры анализов</h2>
-    <v-row dense>
+    <v-row v-if="predictsList" dense>
       <v-col
-        v-for="(image, index) in exampleImages"
-        :key="index"
+        v-for="(predict, index) in predictsList"
+        :key="predict.id"
         cols="12"
         sm="4"
-        md="2"
+        md="3"
       >
-        <v-img
-          :src="image"
-          width="100%"
-          aspect-ratio="1"
-          cover
-          class="rounded-lg elevation-2"
-        />
+        <v-card class="rounded-lg elevation-2" outlined>
+          <v-img
+            :src="predict.marked_photo"
+            width="100%"
+            aspect-ratio="1"
+            cover
+            class="rounded-t-lg"
+          />
+          <v-card-text class="pa-2">
+            <div class="text-subtitle-2 font-weight-medium">
+              {{ (predict.avg_confidence * 100).toFixed(0) }}%
+            </div>
+            <div class="text-caption text-grey-darken-1" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+              {{ predict.opinions.map((op: any) => op.disease).join(", ") }}
+            </div>
+          </v-card-text>
+        </v-card>
       </v-col>
     </v-row>
   </v-container>

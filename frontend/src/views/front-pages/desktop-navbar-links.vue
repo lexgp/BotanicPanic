@@ -11,11 +11,11 @@
   const menuItems: MenuItem[] = [
     {
       listTitle: 'Распознать заболевание',
-      path: '/'
+      path: '#dashboard-header'
     },
     {
-      listTitle: 'Возможности',
-      path: '/'
+      listTitle: 'Этапы проекта',
+      path: '#project-stages'
     },
   ]
 
@@ -30,13 +30,12 @@
 <template>
   <div class="desktop-navbar-links text-base align-center d-none d-md-flex">
     <template v-for="menuItem in menuItems">
-      <RouterLink v-if="menuItem.path"
-        :to="menuItem.path"
+      <a v-if="menuItem.path"
+        :href="menuItem.path"
         class="nav-link font-weight-medium py-2 px-2 px-lg-4"
       >
-        <!-- active-link -->
         {{ menuItem.listTitle }}
-      </RouterLink>
+      </a>
 
       <a v-if="menuItem.children"
         class="nav-link font-weight-medium cursor-pointer px-2 px-lg-4 py-2"

@@ -1,27 +1,8 @@
 <script setup lang="ts">
 import AbountExamples from '@/views/pages/help-center/AbountExamples.vue';
 import AppSearchHeader from '@/views/pages/help-center/AppSearchHeader.vue';
-import HowHelpAbount from '@/views/pages/help-center/HowHelpAbount.vue';
-
-const pagesPragments = ref<any>({
-  MainSlogan: { title: '', content: '' },
-  MainCard1: { title: '', content: '' },
-  MainCard2: { title: '', content: '' },
-  MainCard3: { title: '', content: '' },
-  MainHowHelp: { title: '', content: '' },
-  MainHowHelpLidogenerator: {
-    title: '🧠 Запустили сервис распознавания болезней растений',
-    content: `Изображения анализируются тремя ИИ-моделями: Gemini 2.5, GPT 4.1 nano и LLama 4.
-    Все вместе выдают консолидированное решение.
-    Испытать можно прямо на сайте`
-  },
-  MainHowHelpBonus: {
-    title: '🌿 В разработке — автономное устройство мониторинга',
-    content: 'Планируем компактный гаджет с камерой и ИИ, который сам следит за растениями и сообщает о признаках болезней прямо в приложение.'
-  },
-  MainHowHelpReferral: { title: '', content: '' },
-  MainHowButtonStart: { title: '', content: '' },
-})
+import CompanyAbount from '@/views/pages/help-center/CompanyAbount.vue';
+import ProjectStages from '@/views/pages/help-center/ProjectStages.vue';
 
 </script>
 
@@ -42,23 +23,34 @@ const pagesPragments = ref<any>({
       </template>
     </AppSearchHeader>
 
+    <div class="help-center-section">
+      <VContainer>
+        <h4 class="text-h4 text-center font-weight-semibold mb-6">
+          Результаты исследований загруженных фотографий
+        </h4>
+        <AbountExamples />
+      </VContainer>
+    </div>
+
     <div class="help-center-section bg-surface">
       <VContainer>
-        <h4 class="text-h4 font-weight-semibold mb-6">
-          Состояние проекта
+        <h4 id="about-company" class="text-h4 text-center font-weight-semibold mb-6">
+          О команде
         </h4>
-        <HowHelpAbount :pages-pragments="pagesPragments" />
+        <CompanyAbount />
       </VContainer>
     </div>
 
     <div class="help-center-section">
       <VContainer>
-        <h4 class="text-h4 font-weight-semibold mb-6">
-          Результаты анализа
+        <h4 id="project-stages" class="text-h4 text-center font-weight-semibold mb-6">
+          Этапы проекта
         </h4>
-        <AbountExamples :pages-pragments="pagesPragments" />
+        <ProjectStages />
       </VContainer>
     </div>
+
+    
   </div>
 
 </template>

@@ -26,12 +26,14 @@ class S3Service:
         try:
             # Загружаем файл в бакет
             self.s3_client.upload_fileobj(file, S3Service.BUCKET_NAME, object_name)
-            presigned_url = self.s3_client.generate_presigned_url(
-                'get_object',
-                Params={'Bucket': S3Service.BUCKET_NAME, 'Key': object_name},
-                ExpiresIn=3600
-            )
+            presigned_url = self.get_presigned_url(object_name)
             return presigned_url
         except Exception as e:
             raise HTTPException(status_code=500, detail=f"Ошибка при загрузке файла: {str(e)}")
 
+    def get_presigned_url(self, object_name):
+        return self.s3_client.generate_presigned_url(
+            'get_object',
+            Params={'Bucket': S3Service.BUCKET_NAME, 'Key': object_name},
+            ExpiresIn=3600
+        )

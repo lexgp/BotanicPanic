@@ -16,14 +16,14 @@ interface Menu {
 const pagesList: Menu[] = [
 {
   title: 'Распознать заболевание',
-    path: '/'
+    path: '#dashboard-header'
   },
 ]
 
 const demoList = [
   {
-    title: 'О компании',
-    path: '/',
+    title: 'О команде',
+    path: '#about-company',
   },
 ]
 
@@ -89,7 +89,6 @@ onMounted(() => {
                 >
                   <a
                     :href="item.path"
-                    target="_blank"
                     rel="noopener noreferrer"
                     :class="$vuetify.theme.current.dark ? 'text-body-1' : 'text-white-variant'"
                   >
@@ -116,13 +115,13 @@ onMounted(() => {
                   :key="index"
                   class="mb-4"
                 >
-                  <RouterLink
+                  <a
                     :class="$vuetify.theme.current.dark ? 'text-body-1' : 'text-white-variant'"
                     class="me-2"
-                    :to="item.path"
+                    :href="item.path"
                   >
                     {{ item.title }}
-                  </RouterLink>
+                  </a>
                 </li>
               </ul>
             </div>
